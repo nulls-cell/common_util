@@ -5,12 +5,15 @@ redis_dic = {
         'host': '',
         'password': '',
         'port': '',
-        'db': '',
     },
     'test_db': {
         'host': '',
         'password': '',
         'port': '',
-        'db': '',
     },
+    'lr_db': {
+        'host': '192.168.1.110',
+        'password': '15210945863',
+        'port': 6379,
+    }
 }

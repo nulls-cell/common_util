@@ -14,17 +14,16 @@ class RedisUtil:
 
     @classmethod
     # 获取数据库连接，传入数据库配置key名，在psql_conf.py中
-    def get_pool(cls, redis_name):
-        assert (isinstance(redis_name, str))
+    def get_pool(cls, conn_name):
+        assert (isinstance(conn_name, str))
         # 如果是已经存在的数据库连接，则直接返回该连接，如果是不存在的连接，先创建再返回
         try:
-            if len(cls.connecting_db_dic) > 0:
-                db = cls.connecting_db_dic[0]
+            if conn_name in cls.connecting_db_dic:
+                pool = cls.connecting_db_dic[0]
             else:
-                pool = redis.ConnectionPool(**redis_dic[redis_name])
-
-                cls.connecting_db_dic[redis_name] = pool
-                print('数据库连接成功，参数为：', redis_dic[redis_name])
+                pool = redis.ConnectionPool(**redis_dic[conn_name])
+                cls.connecting_db_dic[conn_name] = pool
+                print('数据库连接成功，参数为：', redis_dic[conn_name])
             return pool
         except Exception as e:
             print('数据库连接失败，原因：' + str(e))
@@ -32,11 +31,11 @@ class RedisUtil:
 
     @classmethod
     # 先检查connecting_db_dic有没有已经存在的连接池，如果有，则在此基础上直接生成db，若没有，则先生成连接池再生成db
-    def get_conn(cls, redis_name):
-        if redis not in cls.connecting_db_dic:
-            pool = cls.get_pool(redis_name)
+    def get_conn(cls, conn_name):
+        if conn_name not in cls.connecting_db_dic:
+            pool = cls.get_pool(conn_name)
         else:
-            pool = cls.connecting_db_dic[redis_name]
+            pool = cls.connecting_db_dic[conn_name]
         db = redis.Redis(connection_pool=pool)
         return db
 
@@ -59,11 +58,15 @@ class RedisUtil:
 
 if __name__ == '__main__':
     # 获取key为formal_rc_prd的数据库连接
-    db1 = RedisUtil.get_conn('test_db')
+    db1 = RedisUtil.get_conn('lr_db')
     # 获取key为formal_application_db的数据库连接
-    db2 = RedisUtil.get_conn('formal_db')
+    db2 = RedisUtil.get_conn('lr_db')
     # 获取key为formal_application_db的数据库连接
-    db3 = RedisUtil.get_conn('formal_db')
+    db3 = RedisUtil.get_conn('lr_db')
+
+    # 随表操作一下
+    db1.set('name','lirui')
+    print("db3.get('name').decode('utf-8')：", db3.get('name').decode('utf-8'))
 
     # 打印3个连接对象的十进制的内存地址
     print(id(db1))
@@ -72,6 +75,6 @@ if __name__ == '__main__':
     # 通过打印，发现db2和db3的内存地址相同，说明相同连接名指向同一个内存地址
 
     # 断开数据库名为formal_rc_prd的数据库连接
-    RedisUtil.close_by_name('test_db')
+    RedisUtil.close_by_name('lr_db')
     # 断开所有数据库连接
     RedisUtil.close_all()

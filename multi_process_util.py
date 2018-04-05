@@ -2,7 +2,7 @@
 from multiprocessing import Pool, Manager
 import time
 import os
-from common_util.log_util import get_logger
+from log_util import get_logger
 
 # 初始化进程锁（注意在使用进程池的时候要用Manager的Lock）
 lock = Manager().Lock()
