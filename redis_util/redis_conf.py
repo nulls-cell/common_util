@@ -1,4 +1,4 @@
-# psql数据库配置
+# redis数据库配置
 
 redis_dic = {
     'formal_db': {
