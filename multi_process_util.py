@@ -2,7 +2,8 @@
 from multiprocessing import Pool, Manager
 import time
 import os
-from log_util import get_logger
+from common_util.log_util import get_logger
+
 
 
 # 此函数用于多进程的“无”返回值的函数执行，func为传入的函数，argvs为传入函数的元祖构成的列表，callback为函数的回调函数，process_num为进程数量
