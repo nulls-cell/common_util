@@ -89,4 +89,3 @@ if __name__ == '__main__':
     EmailUitl.set_mail_header(subject=_subject, receiver_list=_receiver_list, cc_list=_cc_list, bcc_list=_bcc_list)
     # 发送邮件
     EmailUitl.send()
-

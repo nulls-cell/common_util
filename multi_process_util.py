@@ -84,3 +84,4 @@ if __name__ == '__main__':
     res_list = multi_exec_func_result(get_page_decorate, argvs=argvs, callback=parse_page,process_num=10)
     for res in res_list:
         print(res)
+
