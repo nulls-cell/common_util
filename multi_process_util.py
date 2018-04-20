@@ -4,10 +4,6 @@ import time
 import os
 from log_util import get_logger
 
-# 初始化进程锁（注意在使用进程池的时候要用Manager的Lock）
-lock = Manager().Lock()
-path = os.path.dirname(os.path.abspath(__file__))
-logger = get_logger(log_path=path+'/tem.log')
 
 # 此函数用于多进程的“无”返回值的函数执行，func为传入的函数，argvs为传入函数的元祖构成的列表，callback为函数的回调函数，process_num为进程数量
 # argvs按照列表套元祖的形式传入，如[(argv11,argv12),(argv21,argv22)]，每个元祖元素的个数代表func接收的参数的个数，传多了或少了都会报错；
@@ -49,6 +45,12 @@ class OutputPidAndName:
 
 # 测试用的函数，用于测试上面定义的多进程函数
 if __name__ == '__main__':
+
+    # 初始化进程锁（注意在使用进程池的时候要用Manager的Lock）
+    lock = Manager().Lock()
+    path = os.path.dirname(os.path.abspath(__file__))
+    # 初始化加锁logger，用于测试logger多进程
+    logger = get_logger(log_path=path + '/tem.log')
 
     # 初始化参数
     argvs = [('http://maoyan.com/board/' + str(x), lock) for x in range(1, 11)]
