@@ -11,24 +11,28 @@ import traceback
 dt = datetime.date.today().strftime('%Y-%m-%d')
 # 本机的ip地址
 ip = socket.gethostbyname((socket.gethostname()))
+#
+# # window开发环境下
+# if platform.system() == 'Windows':
+#     # 文件和日志的主目录
+#     file_log_path = '/'.join(dirname(abspath(__file__)).split('\\')[:-1])+'/file_log'
+#     the_log_path = file_log_path + '/run_logs/windows_run_log.%s' % dt
+#
+# # ip为生产环境
+# elif ip == '172.16.6.75':
+#     # 文件和日志的主目录
+#     file_log_path = '/'.join(dirname(abspath(__file__)).split('/')[:-1])+'/file_log'
+#     the_log_path = file_log_path + '/run_logs/shengchan_run_log.%s' % dt
+#
+# # 其他ip或者ip为测试环境
+# else:
+#     # 文件和日志的主目录
+#     file_log_path = '/'.join(dirname(abspath(__file__)).split('/')[:-1]) + '/file_log'
+#     the_log_path = file_log_path + '/run_logs/ceshi_run_log.%s' % dt
 
-# window开发环境下
-if platform.system() == 'Windows':
-    # 文件和日志的主目录
-    file_log_path = '/'.join(dirname(abspath(__file__)).split('\\')[:-1])+'/file_log'
-    the_log_path = file_log_path + '/run_logs/windows_run_log.%s' % dt
-
-# ip为生产环境
-elif ip == '172.16.6.75':
-    # 文件和日志的主目录
-    file_log_path = '/'.join(dirname(abspath(__file__)).split('/')[:-1])+'/file_log'
-    the_log_path = file_log_path + '/run_logs/shengchan_run_log.%s' % dt
-
-# 其他ip或者ip为测试环境
-else:
-    # 文件和日志的主目录
-    file_log_path = '/'.join(dirname(abspath(__file__)).split('/')[:-1]) + '/file_log'
-    the_log_path = file_log_path + '/run_logs/ceshi_run_log.%s' % dt
+# 日志路径和日志文件名称
+file_log_path = dirname(dirname(abspath(__file__.replace('\\', '/')))) + '/file_log'
+the_log_path = file_log_path + '/run_logs/run_log.%s' % dt
 
 # 临时文件夹
 tem_file_path = dirname(dirname(abspath(__file__))) + '/file_log/tem_file/'
@@ -46,7 +50,7 @@ un_tem_file_path = dirname(dirname(abspath(__file__))) + '/file_log/un_tem_file/
 """
 
 
-def get_logger(log_path=the_log_path, file_level='INFO', print_level='INFO', log_name='new_log'):
+def get_logger(log_path=the_log_path, file_level='INFO', print_level='DEBUG', log_name='new_log'):
     log_dir = dirname(log_path)
     print('日志路径：'+log_path)
     if not exists(log_dir):

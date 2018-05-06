@@ -1,5 +1,6 @@
 import datetime
 import calendar
+import time
 
 
 # n天之后，n可以是负数，返回datetime格式
@@ -70,6 +71,15 @@ def timestamp_to_dt(_timestamp):
     assert(isinstance(_timestamp, int) and len(str(_timestamp)) == 13)
     return datetime.datetime.utcfromtimestamp(_timestamp/1000)
 
+
+# 获取当前时间的10位时间戳
+def now_10_timestamp():
+    return int(round(time.time()))
+
+
+# 获取当前时间的时间戳
+def now_timestamp():
+    return int(round(time.time()*1000))
 
 if __name__ == '__main__':
     print('5天之前：', add_date(-5).strftime('%Y-%m-%d'))
