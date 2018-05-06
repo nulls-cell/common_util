@@ -1,6 +1,8 @@
-import redis
-from common_util.redis_util.redis_conf import redis_dic
 import traceback
+
+import redis
+
+from common_util.redis_util.redis_conf import redis_dic
 
 
 # pool = redis.ConnectionPool(host='10.0.20.66', port=6379, db=10, password='')
@@ -57,15 +59,15 @@ class RedisUtil:
 
 
 if __name__ == '__main__':
-    # 获取key为formal_rc_prd的数据库连接
+    # 获取key为lr_db的数据库连接
     db1 = RedisUtil.get_conn('lr_db')
-    # 获取key为formal_application_db的数据库连接
+    # 获取key为lr_db的数据库连接
     db2 = RedisUtil.get_conn('lr_db')
-    # 获取key为formal_application_db的数据库连接
+    # 获取key为lr_db的数据库连接
     db3 = RedisUtil.get_conn('lr_db')
 
-    # 随表操作一下
-    db1.set('name','lirui')
+    # 随便操作一下
+    db1.set('name', 'lirui')
     print("db3.get('name').decode('utf-8')：", db3.get('name').decode('utf-8'))
 
     # 打印3个连接对象的十进制的内存地址
